@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="poche1988-001-site2" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\amado\\Documents\\Visual\ Studio\ 2015\\Projects\\MyCVonline\\MyCVonline\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\amado\\Documents\\Visual\ Studio\ 2015\\Projects\\MyCVonline\\MyCVonline\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=SQL6001.site4now.net;Initial Catalog=DB_A292E9_mycvonline;User Id=DB_A292E9_mycvonline_admin;Password=popopo22" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\amado\\Documents\\Visual\ Studio\ 2015\\Projects\\MyCVonline\\MyCVonline\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

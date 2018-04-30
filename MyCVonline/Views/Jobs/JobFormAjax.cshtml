@@ -1,0 +1,168 @@
+﻿@model MyCVonline.Core.ViewModels.JobFormAjaxViewModels
+
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="col-sm-12" id="Update">
+        <div class="formContainer">
+            @using (Ajax.BeginForm("CreateOrEditWithAjax", "Jobs"
+                                                , new AjaxOptions
+                                                {
+                                                    OnBegin = "loadingAjax",
+                                                    OnComplete = "loadingCompletedAjax",
+                                                    OnSuccess = "jobUpdated"
+                                                }
+                                                , new { @class = "form-horizontal", @id = "JobAjaxForm" }))
+
+
+
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.JobID)
+                <h4 class="JobFormTitle" style="color:#0e335b; font-size: 2em;"></h4>
+                <div class="row fila">
+                    <div class="form-group-container">
+                        <div class="col-md-6 form-section">
+                            <div class="col-md-3 form-Subsection-left">
+                                <h4>Job Info</h4>
+                            </div>
+                            <div class="col-md-9 form-Subsection">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.JobTitle, new { @class = "col-md-2 control-label" })
+                                    <div class="form-textbox">
+                                        @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.JobTitle)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-2 control-label" })
+                                    <div class="form-textbox">
+                                        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.CompanyName)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-container">
+                        <div class="col-md-6 form-section">
+                            <div class="col-md-3 form-Subsection-left">
+                                <h4>Job Dates</h4>
+                            </div>
+                            <div class="col-md-9 form-Subsection">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.FromDate, new { @class = "col-md-2 control-label fromValue" })
+                                    <div class="form-textbox">
+                                        @Html.TextBoxFor(model => model.FromDate, new
+                                   {
+                                       @class = "form-control form-control-Crud datepicker",
+                                       placeholder = "From...",
+                                       @type = "date",
+                                       onblur = "compare()"
+                                   })
+                                        @Html.ValidationMessageFor(m => m.FromDate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ToDate, new { @class = "col-md-2 control-label" })
+                                    <div class="form-textbox">
+                                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control form-control-Crud datepicker", placeholder = "From...", @type = "date" })
+                                        @Html.ValidationMessageFor(m => m.ToDate)
+                                    </div>
+                                </div>
+                                <div class="form-group group-date">
+                                    @Html.LabelFor(m => m.OnGoing, new { @class = "col-md-2 control-label checkboxLabel" })
+                                    @Html.CheckBoxFor(model => model.OnGoing, new { value="true", data_toggle = "toggle", data_off = "No", data_on = "Yes", data_size = "small"})
+                                   
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row fila">
+                    <div class="form-group-container">
+                        <div class="col-md-6 form-section">
+                            <div class="col-md-3 form-Subsection-left">
+                                <h4>Job Description</h4>
+                            </div>
+                            <div class="col-md-9 form-Subsection">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.JobDescription, new { @class = "col-md-2 control-label" })
+                                    <div class="form-textbox">
+                                        @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", @rows = 8 })
+                                        @Html.ValidationMessageFor(m => m.JobDescription)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-container">
+                        <div class="col-md-6 form-section">
+                            <div class="col-md-3 form-Subsection-left">
+                                <h4>References</h4>
+                            </div>
+                            <div class="col-md-9 form-Subsection">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Reference, new { @class = "col-md-2 control-label" })
+                                    @Html.TextAreaFor(m => m.Reference, new { @class = "form-control form-control-Crud", placeholder = "Optional", @rows = 4 })
+                                    @Html.ValidationMessageFor(m => m.Reference)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row fila">
+                    <div class="form-group-container">
+
+                        <div class="row form-section">
+                            <div class="col-md-9 col-md-offset-3 form-Subsection-button">
+
+                                <div class="form-group">
+                                    <div class="LeftSide"></div>
+                                    <input type="submit" class="btn btn-default" value="Save" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: "mm-yyyy",
+            startView: "months",
+            minViewMode: "months",
+            useCurrent: true,
+        });
+
+        
+    </script>
+}
+
+
+
+
+

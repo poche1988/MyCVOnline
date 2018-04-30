@@ -1,0 +1,552 @@
+﻿@model MyCVonline.Core.ViewModels.MyCvViewModel
+@using MyCVonline.Core.ViewModels.GlobalResources
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="@Url.Content("~/Content/Print.css")" rel="stylesheet" type="text/css" />
+
+
+
+<div class="row">
+    <div class="hojas_apiladas">
+        <span class="paper-clip"></span>
+
+        <div id="printablePdf" class="row personal-info">
+            <div class="col-xs-4 left column">
+                <div class="foto @(@Model.CurrentUser.Photo == "DefaultUser.png" ? "noFoto" : "fotoOk")" id="photoContainer">
+
+                    @if (Model.CurrentUser.Photo.Substring(0, 5) == "https") // if photo is a link from linkedin
+                    {
+                        <img class="@(@Model.CurrentUser.Photo == "DefaultUser.png" ? "defaultPhoto" : "PersonalPhoto")" id="photo" src="@Html.DisplayFor(m=>m.CurrentUser.Photo)">
+                    }
+                    else
+                    {
+                        <img class="@(@Model.CurrentUser.Photo == "DefaultUser.png" ? "defaultPhoto" : "PersonalPhoto")" id="photo" src="@String.Concat("/Images/Users/", @Html.DisplayFor(m=>m.CurrentUser.Photo))">
+                    }
+                    
+
+
+
+                    <div class="name">
+                        <h4 id="name">@Model.CurrentUser.Name</h4>
+                        <h5 id="profession">@Model.CurrentUser.Profession</h5>
+                        <div class="editBtn" id="editName">
+                            <a class="editProfile">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="editarFoto" id="editPhoto">
+                        <a class="editPhotoIcon">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+
+                    </div>
+
+                    <div class="Form fotoForm">
+                        <div class="row">
+
+                            <form action="/Account/FileUpload" method="post" id="PhotoForm">
+                                @Html.AntiForgeryToken()
+                                <label class="btn btn-default btn-file">
+                                    Browse <input type="file" name="files" style="display: none;" onchange="readfile(this)">
+                                </label>
+                                <div for="file-input" class="preview">
+                                    <img id="image_preview" src="~/Images/Users/DefaultUser.png" class="img-responsive img-thumbnail" />
+                                </div>
+                                <input id="uploadPhoto" type="submit" value="Update Photo" class="btn btn-default">
+                                <span class="field-validation-error" id="photoError"></span>
+                            </form>
+
+                            <div class="progress progress-striped" style="width:80%; margin:10%;">
+                                <div class="progress-bar progress-bar-success">0%</div>
+                            </div>
+
+                            <div class="close">
+                                <span>X</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="divisor20"></div>
+
+                <div id="sectionsAboveEducationContainer">
+                    @if (Model.SectionsAboveEducation.Count > 0)
+                    {
+
+                        foreach (var sectionItem in Model.SectionsAboveEducation)
+                        {
+                            <div class="sectionContainer">
+                                <div class="TitleLeft">
+                                    @sectionItem.Title.ToUpper()
+                                </div>
+                                <div class="SectionDescriptionLeft">
+                                    <p style="white-space:pre-line;">@sectionItem.Description</p>
+                                </div>
+
+                                <div class="actions actionsSection" id="actionsSectionAboveEducation">
+                                    <a class="editSectionIcon"
+                                       data-id="@sectionItem.SectionId"
+                                       data-title="@sectionItem.Title"
+                                       data-description="@sectionItem.Description"
+                                       data-position="2">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="deleteSectionIcon js-delete" data-id="@sectionItem.SectionId">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+
+                        }
+
+
+                    }
+                </div>
+
+                <div class="addBtnSection">
+                    <a class="addSectionIcon" data-position="2">
+                        <span>Insert new section here</span>
+                    </a>
+                </div>
+
+                <div class="TitleLeft">
+                    EDUCATION
+                </div>
+                <div class="addBtnContainer" id="addBtnQualification">
+                    <a id="addQualificationIcon">
+                        <span>Add a qualification</span>
+                    </a>
+
+                </div>
+                <div class="QualificationsContainer" id="QualificationsContainer">
+
+                    <div id="QualificationsList">
+                        @foreach (var education in Model.Qualifications)
+                        {
+                            <div class="@(@education.Highlighted==true ? "HighlitedQualificationFrame" : "qualificationFrame") educationItem" id="@education.QualificationId">
+
+                                <div class="degree">
+                                    @education.QualificationTitle
+                                </div>
+                                <span>
+                                    @education.From.ToString("MMM")-@education.From.ToString("yyyy")
+                                    to
+                                    @education.To.ToString("MMM")-@education.To.ToString("yyyy")
+                                    -
+                                    @education.level.LevelName
+                                </span>
+                                <span class="University">
+                                    @education.University
+                                </span>
+                                <div id="actionsQualification" class="actions actionsQualification">
+                                    <a class="editQualificationIcon"
+                                       data-id="@education.QualificationId"
+                                       data-title="@education.QualificationTitle"
+                                       data-university="@education.University"
+                                       data-from="@education.From.ToString("yyyy-MM-dd")"
+                                       data-to="@education.To.ToString("yyyy-MM-dd")"
+                                       data-level="@education.level.QualificationLevelId">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="deleteQualificationIcon js-delete-qualification" data-id="@education.QualificationId">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                    <a class="@(@education.Highlighted == true ? "highlightedQualification" : "highlightQualification") js-toggle-highlight-front"
+                                       data-id="@education.QualificationId">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+
+
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div id="sectionsUnderEducationContainer">
+                    @if (Model.SectionsUnderEducation.Count > 0)
+                    {
+
+                        foreach (var sectionItem in Model.SectionsUnderEducation)
+                        {
+                            <div class="sectionContainer">
+                                <div class="TitleLeft">
+                                    @sectionItem.Title.ToUpper()
+                                </div>
+                                <div class="SectionDescriptionLeft">
+                                    <p style="white-space:pre-line;">@sectionItem.Description</p>
+                                </div>
+
+                                <div class="actions actionsSection" id="actionsSectionUnderEducation">
+                                    <a class="editSectionIcon"
+                                       data-id="@sectionItem.SectionId"
+                                       data-title="@sectionItem.Title"
+                                       data-description="@sectionItem.Description"
+                                       data-position="1">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="deleteSectionIcon js-delete" data-id="@sectionItem.SectionId">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+
+                        }
+
+                    }
+                </div>
+
+                <div class="addBtnSection">
+                    <a class="addSectionIcon" data-position="1">
+                        <span>Insert new section here</span>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-xs-8 right column">
+                <div class="editPersonalInfo">
+                    <div class="editInfoBtn" id="editInfoBtn">
+                        <a class="editProfile">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </div>
+                    @if (@Model.CurrentUser.Summary != null)
+                    {
+                        <div class="Title">
+                            <span><strong>ABSTRACT</strong></span>
+                        </div>
+                        <div class="abstract">
+                            <p id="abstract" style="white-space:pre-line;">@Model.CurrentUser.Summary</p>
+                        </div>
+                    }
+                    <div class="contact">
+
+                        <div class="detail">
+                            <span id="addressIcon" class="glyphicon glyphicon-home icon"></span>
+                            <span id="address">@Model.CurrentUser.Address</span>
+                        </div>
+
+                        <div class="detail">
+                            <span id="phoneIcon" class="glyphicon glyphicon-earphone icon"></span>
+                            <span id="phone">@Model.CurrentUser.PhoneNumber</span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="glyphicon glyphicon-envelope icon"></span>
+                            <span id="email">@Model.CurrentUser.Email</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="sectionsAboveJobsContainer">
+                    @if (Model.SectionsAboveJob.Count > 0)
+                    {
+
+                        foreach (var sectionItem in Model.SectionsAboveJob)
+                        {
+                            <div class="sectionContainer">
+                                <div class="Title">
+                                    <span><strong>@sectionItem.Title.ToUpper()</strong></span>
+
+                                </div>
+                                <div class="sectionDescription">
+                                    <p style="white-space:pre-line;">@sectionItem.Description</p>
+                                </div>
+
+                                <div class="actions actionsSection" id="actionsSectionAboveJobs">
+                                    <a class="editSectionIcon"
+                                       data-id="@sectionItem.SectionId"
+                                       data-title="@sectionItem.Title"
+                                       data-description="@sectionItem.Description"
+                                       data-position="4">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="deleteSectionIcon js-delete" data-id="@sectionItem.SectionId">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+
+
+                        }
+
+                    }
+                </div>
+
+                <div class="addBtnSection">
+                    <a class="addSectionIcon" data-position="4">
+                        <span>Insert new section here</span>
+                    </a>
+                </div>
+
+                <div class="Title">
+                    <span><strong>WORK EXPERIENCE</strong></span>
+                    <div class="addBtnContainer" id="addBtnJob">
+                        <a id="addJobIcon">
+                            <span>Add a job</span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="CVJobsContainer" id="JobsList">
+                    @foreach (var job in Model.Jobs)
+                    {
+                        <div class="JobContainer JobItem">
+                            <div class="JobTitle">
+                                <span>
+                                    @job.JobTitle - @job.CompanyName
+                                </span>
+
+                            </div>
+                            <div class="Jobdates">
+                                <span>@job.From.ToString("MMM") @job.From.ToString("yyyy") -</span>
+                                @if (job.OnGoing == true)
+                                {
+                                    <span>Ongoing</span>
+                                }
+                                else
+                                {
+                                    <span>@job.To.ToString("MMM") @job.To.ToString("yyyy")</span>
+
+                                }
+                            </div>
+
+
+                            <div class="JobDescription">
+                                <p>
+                                    @job.JobDescription
+                                </p>
+                            </div>
+                            @if (!string.IsNullOrEmpty(job.Reference))
+                            {
+                                <div class="JobReferences">
+                                    <p>
+                                        <strong>References</strong><br> @job.Reference
+                                    </p>
+                                </div>
+                            }
+
+                            <div class="actions actionsJob" id="actionsJob">
+                                <a class="editJobIcon"
+                                   data-id="@job.JobId"
+                                   data-title="@job.JobTitle"
+                                   data-company="@job.CompanyName"
+                                   data-description="@job.JobDescription"
+                                   data-from="@job.From.ToString("yyyy-MM-dd")"
+                                   data-to="@job.To.ToString("yyyy-MM-dd")"
+                                   data-ongoing="@job.OnGoing"
+                                   data-reference="@job.Reference"
+                                   data-checked="false">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a class="deleteJobIcon js-delete-job" data-id="@job.JobId">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+
+
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+                <div id="sectionsUnderJobsContainer">
+                    @if (Model.SectionsUnderJob.Count > 0)
+                    {
+
+                        foreach (var sectionItem in Model.SectionsUnderJob)
+                        {
+                            <div class="sectionContainer">
+                                <div class="Title">
+                                    <span><strong>@sectionItem.Title.ToUpper()</strong></span>
+
+                                </div>
+                                <div class="sectionDescription">
+                                    <p style="white-space:pre-line;">@sectionItem.Description</p>
+                                </div>
+
+                                <div class="actions actionsSection" id="actionsSectionUnderJobs">
+                                    <a class="editSectionIcon"
+                                       data-id="@sectionItem.SectionId"
+                                       data-title="@sectionItem.Title"
+                                       data-description="@sectionItem.Description"
+                                       data-position="3">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="deleteSectionIcon js-delete" data-id="@sectionItem.SectionId">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+
+
+                        }
+
+                    }
+                </div>
+
+                <div class="addBtnSection">
+                    <a class="addSectionIcon" data-position="3">
+                        <span>Insert new section here</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="noprint">
+        <button class="btn btn-primary crud" type="button" onclick="location.href='@Url.Action("UpdateProfile", "Account")'">
+            <span class="glyphicon glyphicon-user"></span>
+            <span>Personal Info</span>
+        </button>
+        <button class="btn btn-primary crud" type="button" onclick="location.href='@Url.Action("Index", "Qualifications")'">
+            <span class="fa fa-graduation-cap"></span>
+            <span>Education</span>
+        </button>
+        <button class="btn btn-primary crud" onclick="location.href='@Url.Action("Index", "Jobs")'">
+            <span class="fa fa-briefcase"></span>
+            <span>Work Experience</span>
+        </button>
+        <button class="btn btn-primary crud" onclick="location.href='@Url.Action("Index", "Section")'">
+            <span class="glyphicon glyphicon-list-alt"></span>
+            <span>Sections</span>
+        </button>
+        <button class="btn btn-default" onclick='alertBrowser()'>
+            <span class="glyphicon glyphicon-print"></span>
+            <span>Print CV</span>
+        </button>
+    </div>
+</div>
+
+<div class="PersonalInfoForm Form">
+    @Html.Action("UpdateProfileAjax", "Account")
+    <div class="close">
+        <span>X</span>
+    </div>
+
+
+</div>
+
+<div class="QualificationForm Form">
+    @Html.Action("CreateOrEditWithAjax", "Qualifications")
+    <div class="close">
+        <span>X</span>
+    </div>
+</div>
+
+<div class="JobForm Form">
+    @Html.Action("CreateOrEditWithAjax", "Jobs")
+    <div class="close">
+        <span>X</span>
+    </div>
+</div>
+
+<div class="SectionForm Form">
+    @Html.Action("CreateOrEditWithAjax", "Section")
+    <div class="close">
+        <span>X</span>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    @*<script src="/Scripts/jquery-1.10.2.js"></script>*@
+    @*<script src="http://malsup.github.com/jquery.form.js"></script>*@
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/AjaxFormsScripts.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            intialController();
+
+            @if (string.IsNullOrEmpty(Model.CurrentUser.Address))
+            {
+                <text>
+            $("#addressIcon").css("display", "none");
+            $("#address").css("display", "none");
+            </text>
+            }
+
+            @if (string.IsNullOrEmpty(Model.CurrentUser.PhoneNumber))
+            {
+                <text>
+            $("#phoneIcon").css("display", "none");
+            $("#phone").css("display", "none");
+            </text>
+            }
+
+
+            $('#OnGoing').change(function () {
+
+                if ($(this).is(":checked")) {
+                    $('#ToDate').val(convertDate(new Date(Date.now())));
+                    $('#ToDate').hide();
+                }
+                else {
+                    $('#ToDate').val('');
+                    $('#ToDate').show();
+                }
+
+            });
+
+
+
+        })
+
+        function intialController() {
+            QualificationsController.init(".actions");
+            JobsController.init(".actionsJob");
+            SectionController.init(".actionsSection");
+        };
+
+
+        function alertBrowser() {
+            bootbox.alert("We recommend Chrome for a smooth impression", function () {
+                $('.modal-dialog').hide();
+                window.print();
+            });
+
+        }
+    </script>
+
+
+}
+
+

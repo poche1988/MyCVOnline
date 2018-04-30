@@ -1,0 +1,73 @@
+﻿@model MyCVonline.Core.ViewModels.NewsFormViewModel
+
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = Model.Heading;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 formCrud">
+        <h2 class="formCrudTilte">@Model.Heading</h2>
+        @using (Html.BeginForm(Model.Action, "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.HiddenFor(m => m.ID)
+            @Html.HiddenFor(m => m.Photo)
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control form-control-Crud", autofocus = "autofocus", placeholder = "Required" })
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Content)
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control form-control-Crud", placeholder = "Required" })
+                @Html.ValidationMessageFor(m => m.Content)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.NotificationMessage )
+                @Html.TextAreaFor(m => m.NotificationMessage, new { @class = "form-control form-control-Crud", placeholder = "Required" })
+                @Html.ValidationMessageFor(m => m.NotificationMessage)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Date)
+                @Html.TextBoxFor(model => model.Date, new { @class = "form-control form-control-Crud datepicker", placeholder = "Date" })
+                @Html.ValidationMessageFor(m => m.Date)
+            </div>
+
+            <div class="form-group">
+                <label for="file-input" class="formCrudImage">
+                    <img id="image_preview" src="@String.Concat("/Images/News/",@Html.DisplayFor(model => model.Photo))" width="120" height="120" style="object-fit: cover;" class="img-responsive img-thumbnail" />
+                </label>
+                
+                <label class="btn btn-default btn-file">
+                    @Global.BrowsePhoto
+                    <input id="@Html.IdFor(model => model.File)" title="Upload Crest" type="file" name="@Html.NameFor(model => model.File)" onchange="readfile(this);">
+                </label>
+                @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">@Global.Save</button>
+
+        }
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script type="text/javascript" src="~/Scripts/ReadFile.js"></script>
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: "dd-mm-yyyy",
+            useCurrent: true,
+        });
+    </script>
+}
+
+
+
+
+
+

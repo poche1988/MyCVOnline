@@ -1,0 +1,70 @@
+﻿@model MyCVonline.Core.ViewModels.QualificationFormViewModel
+@using MyCVonline.Core.ViewModels.GlobalResources
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 formCrud">
+
+        <h2 class="formCrudTilte">
+            <span id="qualificationFormTitle"></span>
+        </h2>
+        @using (Ajax.BeginForm("CreateOrEditWithAjax", "Qualifications"
+                                        , new AjaxOptions
+                                        {
+                                            OnBegin = "loadingAjax",
+                                            OnComplete = "loadingCompletedAjax",
+                                            OnSuccess = "qualificationUpdated"
+                                        }
+                                        , new { @class = "form-horizontal", @id = "QualificationUpdate"}))
+
+
+
+        {
+
+                <p class="alert alert-info">@Global.Allfieldsare <strong>@Global.Required</strong>.</p>
+                @Html.AntiForgeryToken();
+                @Html.HiddenFor(m => m.ID)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Qualification)
+                    @Html.TextBoxFor(m => m.Qualification, new { @class = "form-control form-control-Crud", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.Qualification)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.University)
+                    @Html.TextBoxFor(m => m.University, new { @class = "form-control form-control-Crud" })
+                    @Html.ValidationMessageFor(m => m.University);
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.From)
+                    @Html.TextBoxFor(model => model.From, new { @class = "form-control form-control-Crud datepicker", placeholder = "From...", @type = "date",
+                    onblur = "compare()" })
+                    @Html.ValidationMessageFor(m => m.From)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.To)
+                    @Html.TextBoxFor(model => model.To, new { @class = "form-control form-control-Crud datepicker", placeholder = "From...", @type = "date" })
+                    @Html.ValidationMessageFor(m => m.To)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Level)
+                    @Html.DropDownListFor(m => m.Level, new SelectList(Model.Levels, "QualificationLevelId", "LevelName"), "", new { @class = "form-control form-control-Crud" })
+                    @Html.ValidationMessageFor(m => m.Level)
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">@Global.Save</button>
+
+            }
+</div>
+</div>
+<script>
+$('.datepicker').datepicker({
+            format: "yyyy-MM-dd",
+            //useCurrent: true,
+});
+
+function Validation() {
+    $.validator.unobtrusive.parse($this);
+}
+
+</script>

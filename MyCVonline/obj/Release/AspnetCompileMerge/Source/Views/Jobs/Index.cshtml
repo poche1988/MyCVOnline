@@ -1,0 +1,82 @@
+﻿@model MyCVonline.Core.ViewModels.JobIndexViewModel
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="JobsContainer">
+        <h2 class="TitleLeft sectionTitle">
+            <a href="@Url.Action("Index", "Account")">
+                <img src="~/Images/back.png" class="btnBack" />
+            </a>
+            Work Experience
+            <a href="@Url.Action("Create", "Jobs")" class="btn btn-info">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </h2>
+
+        <ul id="JobsContainer" class="Jobs">
+
+            @foreach (var item in Model.Jobs)
+            {
+                <li class="Job col-sm-4 col-xs-12 jobItem">
+                    <div class="JobFrame" id="@item.JobId">
+
+                        <span class="JobTitle">@item.JobTitle</span>
+                        <span class="JobTitle">@item.CompanyName</span>
+
+
+                        <div class="containerdates">
+                            <div class="dateitem">
+                                <div class="month">@item.From.ToString("MMM")</div>
+                                <div class="year">@item.From.ToString("yyyy")</div>
+                            </div>
+                            <div class="dateitem">
+                                <span>To</span>
+                            </div>
+                            <div class="dateitem">
+                                @if (item.OnGoing == true)
+                                {
+                                    <div class="month">@DateTime.Today.ToString("MMM")</div>
+                                    <div class="year">@DateTime.Today.ToString("yyyy")</div>
+                                }
+                                else
+                                {
+                                    <div class="month">@item.To.ToString("MMM")</div>
+                                    <div class="year">@item.To.ToString("yyyy")</div>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="actions">
+                            <a href="@Url.Action("Update", "Jobs", new { @id = @item.JobId })"
+                               class="btn btn-warning">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                            <a href="#"
+                               class="btn btn-danger js-delete-job" data-id="@item.JobId">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            JobsController.init("#JobsContainer");
+        })
+
+    </script>
+}

@@ -1,0 +1,63 @@
+﻿@model MyCVonline.Core.ViewModels.SectionIndexViewModel
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="SectionsContainer">
+        <h2 class="TitleLeft sectionTitle">
+            <a href="@Url.Action("Index", "Account")">
+                <img src="~/Images/back.png" class="btnBack" />
+            </a>
+            @Global.Sections
+            <a href="@Url.Action("Create", "Section")" class="btn btn-info">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </h2>
+
+        <ul id="SectionContainer" class="Sections">
+            @foreach (var item in Model.Sections)
+            {
+                <li class="col-sm-8 col-sm-offset-2 col-xs-12 sectionItem Section">
+                    <div class="SectionFrame" id="@item.SectionId">
+
+                        <span class="SectionTitle">@item.Title</span>
+                        <hr />
+                        <span class="SectionDesc">@item.Description</span>
+
+                        <span class="SectionPosition">Position: @item.Position.Description</span>
+                        <div class="actions">
+                            <a href="@Url.Action("Update", "Section", new { @id = @item.SectionId })"
+                               class="btn btn-warning a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span>@Global.Edit</span>
+                            </a>
+                            <a href="#"
+                               class="btn btn-danger js-delete" data-id="@item.SectionId">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            SectionController.init("#SectionContainer");
+        })
+
+    </script>
+}

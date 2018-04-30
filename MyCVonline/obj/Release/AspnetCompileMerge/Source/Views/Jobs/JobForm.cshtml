@@ -1,0 +1,81 @@
+﻿@model MyCVonline.Core.ViewModels.JobFormViewModels
+
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = Model.Heading;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3 formCrud">
+        <h2 class="formCrudTilte">
+            <a href="@Url.Action("Index", "Jobs")">
+                <img src="~/Images/back.png" class="btnBackSmall" />
+            </a>
+            @Model.Heading
+        </h2>
+        @using (Html.BeginForm(Model.Action, "Jobs"))
+        {
+            @*<p class="alert alert-info">@Global.Allfieldsare <strong>@Global.Required</strong>.</p>*@
+            @Html.AntiForgeryToken();
+            @Html.HiddenFor(m => m.ID)
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobTitle)
+                @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control form-control-Crud", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(m => m.JobTitle)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyName )
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control form-control-Crud", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(m => m.CompanyName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobDescription )
+                @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control form-control-Crud", @rows = 8 })
+                @Html.ValidationMessageFor(m => m.JobDescription)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Reference)
+                @Html.TextAreaFor(m => m.Reference, new { @class = "form-control form-control-Crud", placeholder = "Optional", @rows = 4 })
+                @Html.ValidationMessageFor(m => m.Reference)
+            </div>
+            <div class="form-group group-date">
+                @Html.LabelFor(m => m.From)
+                @Html.TextBoxFor(model => model.From, new { @class = "form-control form-control-Crud datepicker", placeholder = "From..." })
+                @Html.ValidationMessageFor(m => m.From)
+            </div>
+            <div class="form-group group-date">
+                @Html.LabelFor(m => m.To)
+                @Html.TextBoxFor(model => model.To, new { @class = "form-control datepicker", placeholder = "From..." })
+                @Html.ValidationMessageFor(m => m.To)
+
+            </div>
+            <div class="form-group group-date">
+                @Html.CheckBoxFor(model => model.OnGoing, new { data_toggle = "toggle", data_off = "No", data_on = "Yes", data_size = "small" })
+                @Html.LabelFor(m => m.OnGoing)
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-lg">@Global.Save</button>
+
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: "mm-yyyy",
+            startView: "months",
+            minViewMode: "months",
+            useCurrent: true,
+        });
+    </script>
+}
+
+
+
+
+

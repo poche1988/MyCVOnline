@@ -1,0 +1,53 @@
+﻿@model MyCVonline.Core.ViewModels.SectionFormViewModel
+
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    Layout = null;
+}
+<div class="row" style="margin:1%;">
+    <div class="col-sm-6 col-sm-offset-3 formCrud">
+        <h2 class="formCrudTilte" id="sectionFormTitle"></h2>
+        @using (Ajax.BeginForm("CreateOrEditWithAjax", "Section"
+        , new AjaxOptions
+        {
+        OnBegin = "loadingAjax",
+        OnComplete = "loadingCompletedAjax",
+        OnSuccess = "sectionUpdated"
+        }
+        , new { @class = "form-horizontal", @id = "SectionAjaxForm" }))
+
+
+
+        {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(m => m.SectionId)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control form-control-Crud", autofocus = "autofocus" })
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-Crud", @rows = 8 })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PositionId)
+            @Html.DropDownListFor(m => m.PositionId, new SelectList(Model.Positions, "ID", "Description"), "", new { @class = "form-control form-control-Crud" })
+            @Html.ValidationMessageFor(m => m.PositionId)
+        </div>
+
+
+
+
+
+
+        <button type="submit" class="btn btn-primary btn-lg">@Global.Save</button>
+
+        }
+    </div>
+</div>
+

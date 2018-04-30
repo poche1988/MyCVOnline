@@ -1,0 +1,311 @@
+﻿
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "";
+}
+
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/logo.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>My Cv Online - CV resume creator - Is free!!</title>
+    <meta name="description" content="Create a professional cv in minutes. Use mycvonline Builder. Free cv templates, cv designs, cv samples, cv examples and more.">
+    <meta name="keywords" content="My cv online, cv creator, resume creator, cv Builder, cv templates, cv samples, cv examples, cv designs, cvs, cv, cv tips, online cv, cv writing, create cv ,resume Builder, resume templates, resume samples, resume examples, resume designs, resume, resumes, resume tips, online resume, resume writing, create resume, free, new zealand">
+    <script type="application/ld+json">
+        {
+        "@@context": "http://schema.org/ProfessionalService",
+        "@@type": "Service",
+        "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Wellington",
+        "addressRegion": "Wellington",
+        "postalCode":"6012",
+        "streetAddress": "142 Wadestown Rd"
+        },
+        "description": "Online CV Creator, create a professsional CV for free, resume creator",
+        "name": "My CV Online",
+
+        "brand": {
+        "@@type": "Thing",
+        "name": "mycvonline"
+        },
+        "geo": {
+        "@@type": "GeoCoordinates",
+        "latitude": "40.75",
+        "longitude": "73.98"
+        },
+        "sameAs" : [ "www.mycvonline.co.nz",
+        "www.mycvonline.website"]
+        }
+    </script>
+    @Styles.Render("~/Content/css")
+
+
+    <style>
+        .navbar-form input, .form-inline input {
+            width: auto;
+        }
+
+        #nav.affix {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+    </style>
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+<body>
+
+    <div class="loader"></div>
+
+
+
+    <div id="content" style="display:none;">
+        <!-- Begin Navbar -->
+        <div id="nav">
+            <div class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <a href="#content">
+                        <img class="logo-Menu" src="~/Images/logohorizontal.png" />
+                    </a>
+                    <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+
+                    </a>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav pull-right">
+                            <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
+                            <li><a href="@Url.Action("Login", "Account")">Log In</a></li>
+                            <li><a href="#HowItWorks">How it works</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.navbar -->
+        <!-- Begin Logo & Buttons -->
+        <section id="logoAndButtons">
+            <img class="logo" src="~/Images/logo.png" />
+            <h1>Boost your <strong>Career</strong> with a professional <strong>CV</strong>.</h1>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 SmallButtons">
+                    <div class="col-xs-12">
+                        <div class="ui-group-buttons">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Register", "Account")';return false;">Create CV</button>
+                            <div class="or or-lg"></div>
+                            <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("Login", "Account")';return false;">Sign In</button>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+                <div class="col-xs-4 col-xs-offset-4">
+                    <a href="#HowItWorks">
+                        <i id="chevronDown" class="fa fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- End Logo & Buttons -->
+        <!-- Begin How It Works -->
+        <section id="HowItWorks" class="stepByStep">
+            <div class="page-header text-center">
+                <h1 id="timeline">CREATE A CV IN A FEW SIMPLE STEPS</h1>
+            </div>
+            <ul class="timeline">
+
+                <li>
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">1</span>Click on Create CV</h1>
+
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 1.jpg" />
+
+
+                        </div>
+
+                    </div>
+                </li>
+
+                <li class="timeline-inverted">
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record invert" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">2</span>Fill up your Personal Info and then click NEXT.</h1>
+
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 2.jpg" />
+
+                        </div>
+
+
+                    </div>
+                </li>
+
+                <li>
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">3</span>Your CV has been created</h1>
+                            <p>Now is time to start adding your work experience, education and more!! An account has been created. </p>
+                            <p>You can log in into your account an keep updating your CV whenever you want from any device with Internet access.</p>
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 3.jpg" />
+
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-inverted">
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record invert" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">4</span>Add your Work Experience.</h1>
+                            <p>Click on Work Experience in the Main Menu or in the Dropdown Menu.<p>
+                            <p>In this area you can add, edit or delete a job.</p>
+
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 4 b.jpg" />
+
+                        </div>
+                        <div class="timeline-body">
+                            <p>Fill up the Create Job form and click Save.<p>
+                        </div>
+
+                    </div>
+                </li>
+
+                <li>
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record invert" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">5</span>Add your Qualifications.</h1>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Click on Education in the Main Menu or in the Dropdown Menu.<p>
+                            <p>In this area you can add, edit or delete a qualification.</p>
+
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 5.jpg" />
+
+                        </div>
+                        <div class="timeline-body">
+                            <p>Fill up the Create Qualification Form and click Save.<p>
+                        </div>
+
+                    </div>
+                </li>
+
+                <li class="timeline-inverted">
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record invert" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">6</span>Add more Info to your CV creating Sections.</h1>
+
+                            <p>Use sections to add more info to your resume like skills, languages, voluntary service, etc.<p>
+                            <p>It's easy! Just introduce a section's title, content and pick where you want to show it on your cv.</p>
+                            <p>The possible positions are: under jobs, above jobs, under education and above education.</p>
+
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 6.jpg" />
+
+                        </div>
+                        <div class="timeline-body">
+                            <p>Fill up the form and click Save.<p>
+                        </div>
+
+                    </div>
+                </li>
+
+                <li>
+                    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record invert" rel="tooltip" id=""></i></a></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-body">
+                            <h1><span class="numberCircle">7</span>Print your CV and nail your next interview!!</h1>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Once your CV is ready, just click on PRINT in the Main Menu.<p>
+                        </div>
+                        <div class="timeline-heading">
+                            <img class="img-responsive" src="~/Images/StepByStep/Step 7.jpg" />
+
+                        </div>
+                    </div>
+                </li>
+
+
+
+                <li class="clearfix" style="float: none;"></li>
+            </ul>
+        </section>
+        <!-- End How It Works -->
+        <section id="footerHome">
+            <div class="row">
+                <div class="social">
+                    <a href="https://www.linkedin.com/in/gonzalo-amado-075b49b9/" target="_blank"><i class="fa fa-lg fa-linkedin"></i></a>
+                    <a href="https://youtu.be/pVnolLBq6QU" target="_blank"><i class="fa fa-lg fa-youtube"></i></a>
+                </div>
+                <p align="center">© My Cv Online. All rights reserved. Designed by <a href="https://www.linkedin.com/in/gonzalo-amado-075b49b9/" target="_blank" class="linkedin"><strong>Gonzalo Amado</strong></a></p>
+            </div>
+        </section>
+
+    </div>
+
+
+</body>
+</html>
+
+@Scripts.Render("~/bundles/lib")
+<script src="~/Scripts/Scroller.js"></script>
+<script>
+    $(document).ready(function () {
+
+        //loader
+        setTimeout(
+            function loading() {
+                $('.loader').fadeOut(500);
+                setTimeout(function () { $('#content').fadeIn().css("display", "block") }, 500);
+            }, 2000);
+
+
+        //sticky navbar
+        $('#nav').affix({
+            offset: {
+                top: $('header').height()
+            }
+        });
+
+        //navbar color when scroll down
+
+
+        var scroll_start = 0;
+        var startchange = $('#logoAndButtons');
+        var offset = startchange.offset();
+        if (startchange.length) {
+            $(document).scroll(function () {
+                scroll_start = $(this).scrollTop();
+                if (scroll_start > offset.top) {
+                    $(".navbar-inverse").css('background-color', 'rgba(0,51,102,0.9)');
+                } else {
+                    $('.navbar-inverse').css('background-color', 'transparent');
+                }
+            });
+        }
+
+    });
+</script>

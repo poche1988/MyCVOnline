@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/logo.ico" />
+    <title>My CV Online</title>
+    <link href="https://Content/fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="@Url.Action("Index", "Account")">
+                        <img class="logo-Menu" src="~/Images/logohorizontal.png" />
+                    </a>
+
+                    <div>
+                        @Html.Partial("_Usermenu")
+                        <ul class="nav navbar-nav navbar-right"></ul>
+                    </div>
+
+
+
+                    <div class="notificationsIcon navbar-right">
+                        <a href="#" id="popovernotifications" rel="popover">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <span class="badge js-notifications-count hide"></span>
+                        </a>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <section id="footerHome">
+            <div class="row">
+                <div class="social">
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("AdminPanel", "Admin")"><i class="fa fa-lg fa-user"></i></a>
+
+                    }
+                    <a href="https://www.linkedin.com/in/gonzalo-amado-075b49b9/" target="_blank"><i class="fa fa-lg fa-linkedin"></i></a>
+                    <a href="https://youtu.be/pVnolLBq6QU" target="_blank"><i class="fa fa-lg fa-youtube"></i></a>
+                </div>
+                <p align="center">© My Cv Online. All rights reserved. Designed by <a href="https://www.linkedin.com/in/gonzalo-amado-075b49b9/" target="_blank" class="linkedin"><strong>Gonzalo Amado</strong></a></p>
+            </div>
+        </section>
+    </footer>
+
+    <div id="loading">
+        <div class="loader"></div>
+        <h4>Updating CV...</h4>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/app")
+    @RenderSection("scripts", required: false)
+
+    <script id="notificationTemplate" type="text/template">
+        <ul class="notificationPopover">
+            <% _.each(notifications, function(notification){%>
+            <li>
+                <span class="NotificationTitle"><%= notification.News.Title %></span> :
+                <a href="/News/Details/<%= notification.News.NewsId %>" target="_blank"><%= notification.Message %></a>
+                <span class="NotificationDate"><%= moment(notification.Date).format("D MMM HH:mm") %></span>
+            </li>
+            <%
+            })
+            %>
+        </ul>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/Notifications/GetNewNotifications", function (notifications) {
+                if (notifications.UnreadCount != 0) {
+                    $(".js-notifications-count")
+                    .text(notifications.UnreadCount)
+                    .removeClass("hide")
+                    .addClass("animated bounceInDown"); //notification badge's bounce effect
+                }
+
+                $('#popovernotifications').popover({
+
+                    container: "body",
+                    html: true,
+                    title: "Notifications",
+                    placement: "bottom",
+                    content: function () {
+                        var _compiled = $('#notificationTemplate').html();
+                        return _.template(_compiled)({ notifications: notifications.Notifications });
+
+                    }
+                })
+                    .on("shown.bs.popover", function () //when the shown event of the popover is fired, call the API to change the IsRead of the notification to true
+                    {
+                        $.post("/api/Notifications/MarkNotificationsAsRead")
+                            .done(function () {
+                                $(".js-notifications-count").addClass("hide");
+                            });
+                    });
+
+            })
+
+            $('html').on('mouseup', function (e) { //hide popover when you click outside
+                if (!$(e.target).closest('.notificationPopover').length) {
+                    $('.notificationPopover').each(function () {
+                        $(".popover").popover('hide');
+                    });
+                }
+            });
+
+            $('body').on('hidden.bs.popover', function (e) { // prevent two clicks to open popover after hide
+                $(e.target).data("bs.popover").inState.click = false;
+            });
+
+
+        });
+
+        function popovernotifications() {
+            
+            $.getJSON("/api/Notifications/GetNewNotifications", function (notifications) {
+                if (notifications.UnreadCount != 0) {
+                    $(".js-notifications-count")
+                    .text(notifications.UnreadCount)
+                    .removeClass("hide")
+                    .addClass("animated bounceInDown"); //notification badge's bounce effect
+                }
+
+                $('#popovernotifications').popover({
+                    
+                    container: "body",
+                    html: true,
+                    title: "Notifications",
+                    placement: "bottom",
+                    content: function () {
+                        var _compiled = $('#notificationTemplate').html();
+                        return _.template(_compiled)({ notifications: notifications.Notifications });
+
+                    }
+                })
+                    .on("shown.bs.popover", function () //when the shown event of the popover is fired, call the API to change the IsRead of the notification to true
+                    {
+                        $.post("/api/Notifications/MarkNotificationsAsRead")
+                            .done(function () {
+                                $(".js-notifications-count").addClass("hide");
+                            });
+                    });
+
+            })
+                    
+        }
+    </script>
+</body>
+
+
+</html>

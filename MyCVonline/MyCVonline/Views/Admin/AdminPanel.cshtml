@@ -1,0 +1,168 @@
+﻿@model MyCVonline.Core.ViewModels.AdminPanelViewModel
+@{ 
+    ViewBag.Title = "Admin Panel";
+    Layout = "";
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/logo.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Panel</title>
+    @Styles.Render("~/Content/Admincss")
+    <script src="https://use.fontawesome.com/07b0ce5d10.js"></script>
+</head>
+
+<body>
+    <div class="container-2">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-5 col-xs-8 col-xs-offset-2 logoAdminContainer">
+
+                    <a href="@Url.Action("Index", "Account")">
+                        <img class="logo-Menu" src="~/Images/logohorizontal.png" />
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+
+                        <div class="circle-tile-heading dark-blue">
+                            <i class="fa fa-users fa-fw fa-3x"></i>
+                        </div>
+
+                        <div class="circle-tile-content dark-blue">
+                            <div class="circle-tile-description text-faded">
+                                Users
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.Users.Count
+                                <span id="sparklineA"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+
+                        <div class="circle-tile-heading green">
+                            <i class="fa fa-user-plus fa-fw fa-3x"></i>
+                        </div>
+
+                        <div class="circle-tile-content green">
+                            <div class="circle-tile-description text-faded">
+                                Sign ups in last 10 days
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.SignUpsInLastTenDays
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+
+                        <div class="circle-tile-heading orange">
+                            <i class="fa fa-upload fa-fw fa-3x"></i>
+                        </div>
+
+                        <div class="circle-tile-content orange">
+                            <div class="circle-tile-description text-faded">
+                                Last Sign up
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.LastSignUpDate.ToString("dd-MM-yy")
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+
+                        <div class="circle-tile-heading blue">
+                            <i class="fa fa-bell fa-fw fa-3x"></i>
+                        </div>
+
+                        <div class="circle-tile-content blue">
+                            <div class="circle-tile-description text-faded">
+                                User Activities today
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.UserActivitiesToday
+                                <span id="sparklineB"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+
+                        <div class="circle-tile-heading red">
+                            <i class="fa fa-user fa-fw fa-3x"></i>
+                        </div>
+
+                        <div class="circle-tile-content red">
+                            <div class="circle-tile-description text-faded">
+                                Most active user
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.MostActiveUser
+                                <span id="sparklineC"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="circle-tile">
+                        <a href="@Url.Action("Index","News")">
+                            <div class="circle-tile-heading purple">
+                                <i class="fa fa-newspaper fa-fw fa-3x"></i>
+                            </div>
+                        </a>
+                        <div class="circle-tile-content purple">
+                            <div class="circle-tile-description text-faded">
+                                News
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                @Model.News.Count
+                                <span id="sparklineD"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach (var user in Model.LastUsers)
+                {
+                    <div>
+                        @user.Name + @user.Address + @user.EmailConfirmed.ToString()
+                    </div>
+                }
+            </div>
+
+
+
+        </div><!-- page-wrapper END-->
+    </div><!-- container-1 END-->
+
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@model MyCVonline.Core.ViewModels.NewsIndexViewModel 
+@using MyCVonline.Core.ViewModels.GlobalResources
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="News">
+        <h2 class="sectionTitle TitleCentered">
+            News
+            <a href="@Url.Action("Create", "News")" class="btn btn-xs btn-info">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </h2>
+        @using (Html.BeginForm("Search", "News")) { 
+        <div class="form-group">
+            <div class="input-group" id="NewsSearch">
+                @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control", placeholder = "Search by title or content..." })
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+            </div>
+        </div>
+        }
+
+        <ul id="NewsContainer">
+
+            
+            @foreach (var item in Model.News)
+            {
+                <li class="NewsItem col-lg-6 col-lg-offset-3 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+                    <span class="NewsTitle">@item.Title</span>
+                    <a href="#" class="btn btn-xs btn-danger js-delete-news" data-id="@item.NewsId">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="@Url.Action("Update", "News", new { @id = @item.NewsId})" class="btn btn-xs btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            NewsController.init("#NewsContainer");
+        })
+    </script>
+}

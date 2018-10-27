@@ -1,0 +1,484 @@
+﻿/*PRINT CV*/
+@color_1: #fff;
+@color_2: #F3ECEC;
+@color_3: #C7C7D0;
+@color_4: #0e335b;
+@color_5: black;
+@color_6: #808080;
+@color_7: white;
+@color_8: #333333;
+@color_9: #4aacc5;
+@color_Gold: #b8c5b2;
+@color_Gold_Dark: #0d2f5f;
+@font_family_1: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font_family_2: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+@background_color_1: #0DB3EF;
+@background_color_2: #0277b7;
+@background_color_3: #0FA6D4;
+@background_color_4: #F3ECEC;
+@background_color_5: #FAFAFA;
+@background_color_6: darkcyan;
+@border_color_1: #0DB3EF;
+/*print chrome big screen*/
+
+/*PRINT CV*/
+/*print chrome big screen*/
+
+@media print {
+    @page {
+        size: auto; // auto is the initial value
+        margin: 5mm 5mm; // this affects the margin in the printer settings
+    }
+
+    html {
+        background-color: #FFFFFF;
+    }
+
+    html, body, .hojas_apiladas, .personal-info {
+        height: 99% !important;
+    }
+
+    html, body {
+        margin: 0px; // this affects the margin on the html before sending to printer
+    }
+
+    body {
+        overflow-y: visible !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+
+        .body-content {
+            padding-top: 0px;
+            padding-left: 0;
+            padding-right: 0;
+            height: auto;
+            margin: 0mm 5mm;
+
+            hr {
+                display: none;
+            }
+        }
+
+
+        .hojas_apiladas {
+            margin-top: 0 !important;
+            background: #fff;
+            border: 0;
+            min-height: 300px;
+            width: 95%;
+            margin: 10px auto;
+            padding: 0em 0em;
+            box-shadow: 0;
+            margin: 0px;
+            page-break-before: none;
+            page-break-after: none;
+            page-break-inside: avoid;
+            overflow: visible !important;
+
+            @media (max-device-width: 768px)
+            {
+                display: block; // show cv only to print
+            }
+
+            span.paper-clip {
+                display: none !important;
+            }
+
+            .personal-info {
+                min-width: 100%;
+                min-height: 300px;
+                display: block;
+                overflow: visible !important;
+                position: relative;
+
+                > div {
+                    display: block;
+                }
+
+                .left {
+                    padding-top: 30px;
+                    padding-bottom: 0px;
+                    margin-bottom: 0px;
+                    min-height: 0;
+                    margin-left: 1px;
+                    background-color: none !important;
+                    position: absolute;
+                    left: 0;
+                    width: 40% !important;
+                    overflow: visible !important;
+                    border-right: 1px solid @color_9;
+
+                    .foto {
+                        width: 100%;
+                        height: 25vw;
+                        position: relative;
+                        display: inline-block;
+                        overflow: hidden;
+
+                        img {
+                            height: 21vw;
+                            width: auto;
+                            object-fit: cover;
+                            object-position: top;
+                        }
+
+                        .defaultPhoto{
+                            display: none;
+                        }
+
+                        .name {
+                            position: absolute;
+                            background-color: #4aacc5 !important;
+                            -webkit-print-color-adjust: exact;
+                            color-adjust: exact;
+                            width: 100%;
+                            bottom: 0px;
+                            padding: 5px;
+                            color: @color_2 !important;
+
+
+                            h4 {
+                                color: #f5f5f5 !important;
+                                text-shadow: 0 0 0 #f5f5f5 !important;
+                                -webkit-print-color-adjust: exact;
+                                color-adjust: exact;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                font-size: 22px;
+                                font-size: 1.9vw;
+                                margin-top: 0.5vw;
+                                margin-bottom: 0.5vw;
+                            }
+
+                            h5 {
+                                color: @color_2 !important;
+                                color-adjust: exact;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                font-size: 20px;
+                                font-size: 1.6vw;
+                                margin-top: 0.5vw;
+                                margin-bottom: 0.5vw;
+                            }
+                        }
+                    }
+
+                    .noFoto{
+                        height: 85px;
+                    }
+
+                    .divisor20 {
+                        display: block;
+                        min-height: 20px;
+                    }
+
+                    .TitleLeft {
+                        padding: 20px 20px 0 20px;
+                        text-align: left;
+                        color: @color_8 !important;
+                        font-weight: 700;
+                        border-bottom: 1px solid @color_9 !important;
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        position: relative;
+                        font-size: 1.7vw;
+                    }
+
+                    .SectionDescriptionLeft {
+                        color: @color_8;
+                        text-align: left;
+                        margin: 5px;
+                        font-size: 1.6vw;
+                    }
+
+
+                    .qualificationFrame {
+                        padding: 10px 10px;
+
+                        .degree {
+                            color: #468ea1 !important;
+                            color-adjust: exact;
+                            font-size: 18px;
+                            font-size: 1.5vw;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            text-align: left;
+                        }
+
+                        span {
+                            display: block;
+                            text-align: left;
+                            color: @color_8 !important;
+                            color-adjust: exact;
+                            font-size: 16px;
+                            font-size: 1.5vw;
+                            font-weight: 700;
+                        }
+
+                        span.University {
+                            font-weight: 400;
+                        }
+                    }
+
+                    .HighlitedQualificationFrame {
+                        padding: 10px 10px;
+                        color: @color_Gold_Dark;
+                        padding: 10px 10px;
+                        background-color: #f5f5f5 !important;
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        margin: 5px;
+
+                        .degree {
+                            color: @color_9;
+                            font-size: 20px;
+                            font-size: 1.6vw;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            text-align: left;
+                        }
+
+                        span {
+                            display: block;
+                            text-align: left;
+                            color: @color_8;
+                            font-size: 1.5vw;
+                            font-weight: 700;
+                        }
+
+                        span.University {
+                            font-weight: 400;
+                        }
+                    }
+                }
+
+                .right {
+                    padding: 20px;
+                    overflow: visible !important;
+                    position: absolute;
+                    width: 60%;
+                    right: 0;
+                    border-left: 1px solid @color_9;
+
+                    .Title {
+                        text-align: center;
+                        position: relative;
+                        font-size: 22px;
+                        font-size: 1.9vw;
+                        z-index: 100;
+                        color: @color_8 !important;
+                        margin-top: 10px;
+
+
+                        span {
+                            padding: 0 15px;
+                            background-color: @color_1 !important;
+                            -webkit-print-color-adjust: exact;
+                            color-adjust: exact;
+                        }
+                    }
+
+                    .Title:after {
+                        content: '';
+                        background-color: @color_9 !important;
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        height: 1px;
+                        display: block;
+                        position: absolute;
+                        top: 1vw;
+                        left: 0;
+                        width: 100%;
+                        z-index: -1;
+                    }
+
+                    .abstract {
+                        color: @color_8 !important;
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        padding: 10px;
+                        text-align: left;
+                        font-size: 20px;
+                        font-size: 1.6vw;
+                    }
+
+                    .contact {
+                        position: relative;
+                        background-color: rgba(0, 0, 0, 0.05) !important;
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        margin-bottom: 20px;
+                        padding: 10px;
+                        padding-left: 20%;
+                        width: 90%;
+                        margin-left: 5%;
+                        font-size: 1.6vw;
+
+                        .detail {
+                            display: block;
+                            padding: 5px;
+                            font-family: @font_family_1;
+                            text-align: left;
+                            color: @color_8;
+
+                            .icon {
+                                margin-right: 5px;
+                                border: 1px solid @color_9;
+                                background-color: @color_9;
+                                border-radius: 50%;
+                                padding: 5px;
+                                background-color: @color_1 !important;
+                                color: @color_9 !important;
+                                print-color-adjust: exact;
+                                color-adjust: exact;
+                            }
+
+                            .iconWhite {
+                                color: @color_2 !important;
+                                color-adjust: exact;
+                            }
+                        }
+                    }
+
+                    .CVJobsContainer {
+                        padding: 5px;
+                        margin-top: 10px;
+                        color: @color_8;
+                        text-align: left;
+                        font-size: 20px;
+
+                        .JobContainer {
+                            margin-bottom: 15px;
+
+                            .JobTitle {
+                                font-weight: 700;
+
+                                span {
+                                    display: inline;
+                                    font-size: 2vw;
+                                    color: @color_9;
+                                }
+                            }
+
+                            .Jobdates {
+                                span {
+                                    font-size: 1.8vw;
+                                    font-weight: 700;
+                                }
+                            }
+
+                            .JobDescription {
+                                padding: 0;
+
+                                p {
+                                    white-space: pre-line;
+                                    font-size: 1.6vw;
+                                }
+                            }
+
+                            .JobReferences {
+                                p {
+                                    font-size: 1.6vw;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .noprint {
+        display: none;
+    }
+
+    #footerHome {
+        display: none;
+
+        .social {
+            display: none;
+        }
+    }
+}
+
+//print firefox
+
+@-moz-document url-prefix() {
+    @media print {
+
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+
+        html, body, .hojas_apiladas, .personal-info {
+            height: 99% !important;
+        }
+
+        html {
+            -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+        }
+
+        body {
+            -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+        }
+
+        .hojas_apiladas {
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+
+            .personal-info {
+                .left {
+                    padding-top: 30px;
+                    padding-bottom: 0px;
+                    margin-bottom: 0px;
+                    min-height: 0;
+
+                    .foto {
+                        .name {
+                            h4 {
+                                color: rgba(0,0,0,0);
+                                text-shadow: 0 0 0 #f5f5f5 !important;
+                                -webkit-print-color-adjust: exact;
+                                color-adjust: exact;
+                                font-size: 1.9vw;
+                            }
+
+                            h5 {
+                                color: rgba(0,0,0,0);
+                                text-shadow: 0 0 0 #f5f5f5 !important;
+                                color-adjust: exact;
+                                font-size: 1.6vw;
+                            }
+                        }
+                    }
+                }
+
+                .right {
+                    padding-bottom: 0px;
+                    margin-bottom: 0px;
+                    border-left: 0;
+                }
+            }
+        }
+
+        @media print and (-webkit-min-device-pixel-ratio:0) {
+            h4 {
+                color: #f5f5f5 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            h5 {
+                color: #f5f5f5 !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    }
+}
+
+
+
+

@@ -53,3 +53,7 @@ C:\Users\amado\Documents\Visual Studio 2015\Projects\MyCVonline\MyCvOnline.UnitT
 C:\Users\amado\Documents\Visual Studio 2015\Projects\MyCVonline\MyCvOnline.UnitTests\bin\Debug\FluentMvcTesting.Extensions.dll
 C:\Users\amado\Documents\Visual Studio 2015\Projects\MyCVonline\MyCvOnline.UnitTests\bin\Debug\TestStack.FluentMVCTesting.dll
 C:\Users\amado\Documents\Visual Studio 2015\Projects\MyCVonline\MyCvOnline.UnitTests\bin\Debug\Castle.Core.xml
+C:\Users\gonza\Source\Repos\MyCVOnline\MyCvOnline.UnitTests\obj\Debug\MyCvOnline.UnitTests.csprojAssemblyReference.cache
+C:\Users\gonza\Source\Repos\MyCVOnline\MyCvOnline.UnitTests\obj\Debug\MyCvOnline.UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\gonza\Source\Repos\MyCVOnline\MyCvOnline.UnitTests\obj\Debug\MyCvOnline.UnitTests.dll
+C:\Users\gonza\Source\Repos\MyCVOnline\MyCvOnline.UnitTests\obj\Debug\MyCvOnline.UnitTests.pdb

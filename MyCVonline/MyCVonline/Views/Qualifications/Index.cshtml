@@ -1,0 +1,90 @@
+﻿@model MyCVonline.Core.ViewModels.QualificationIndexViewModel
+@using MyCVonline.Core.ViewModels.GlobalResources
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="QualificationsContainer">
+        <h2 class="TitleLeft sectionTitle">
+            <a href="@Url.Action("Index", "Account")">
+                <img src="~/Images/back.png" class="btnBack"/>
+            </a>
+            @Global.Qualifications
+            <a href="@Url.Action("Create", "Qualifications")" class="btn btn-info">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </h2>
+
+        <ul id="QualificationsContainer" class="Qualifications">
+            @foreach (var item in Model.Qualifications)
+            {
+                <li class="Qualification col-lg-4 col-md-4 col-sm-6 col-xs-12 educationItem">
+                    <div class="@(@item.Highlighted==true ? "HighlitedQualificationFrame" : "qualificationFrame") educationItem" id="@item.QualificationId">
+
+                        <span class="qualTitle">@item.QualificationTitle</span>
+
+
+                        <div class="containerdates">
+                            <div class="dateitem">
+                                <div class="month">@item.From.ToString("MMM")</div>
+                                <div class="year">@item.From.ToString("yyyy")</div>
+                            </div>
+                            <div class="dateitem">
+                                <span>To</span>
+                            </div>
+                            <div class="dateitem">
+                                <div class="month">@item.To.ToString("MMM")</div>
+                                <div class="year">@item.To.ToString("yyyy")</div>
+                            </div>
+                        </div>
+                        <span class="quallevel">@item.level.LevelName</span>
+                        <span class="qualUniversity">@item.University</span>
+                        <div class="actions">
+                            <button data-id="@item.QualificationId"
+                                    class="btn a-btn-slide-text @(@item.Highlighted==true ? "btn-info" : "btn-default") js-toggle-highlight">
+                                @if (item.Highlighted == true)
+                                {<span>Highlighted!</span>}
+                                else
+                                {<span>Highlight</span>}
+                            </button>
+
+                            <a href="@Url.Action("Update", "Qualifications", new { @id = @item.QualificationId })"
+                               class="btn btn-warning a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span>@Global.Edit</span>
+                            </a>
+                            <a href="#"
+                               class="btn btn-danger js-delete-qualification" data-id="@item.QualificationId">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true">@Global.Delete</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </li>
+            }
+        </ul>
+    </div>
+    
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            QualificationsController.init("#QualificationsContainer");
+
+            var maxheight = 0;
+
+            $('.educationItem').each(function () {
+                
+                maxheight = ($(this).height() > maxheight ? $(this).height() : maxheight);
+                
+            });
+
+            $('.educationItem').height(maxheight);
+        })
+    </script>
+}

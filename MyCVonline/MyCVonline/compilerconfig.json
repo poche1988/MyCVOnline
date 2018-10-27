@@ -1,0 +1,26 @@
+﻿[
+  {
+    "outputFile": "Content/Site.css",
+    "inputFile": "Content/Site.less"
+  },
+  {
+    "outputFile": "Content/PrintStyle.css",
+    "inputFile": "Content/PrintStyle.less"
+  },
+  {
+    "outputFile": "Content/Print.css",
+    "inputFile": "Content/Print.less"
+  },
+  {
+    "outputFile": "Content/Home.css",
+    "inputFile": "Content/Home.less"
+  },
+  {
+    "outputFile": "Content/site2.css",
+    "inputFile": "Content/site2.less"
+  },
+  {
+    "outputFile": "Content/Admin.css",
+    "inputFile": "Content/Admin.less"
+  }
+]
